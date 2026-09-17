@@ -1,407 +1,357 @@
 <!DOCTYPE html>
-2
 <html lang="pt-BR">
-3
 <head>
-4
-<meta charset="UTF-8" />
-5
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-6
-<meta name="theme-color" content="#0a0a0f" />
-7
-<meta name="description" content="Carlos Alexandre — Dev Full Stack em formação, focado em IA, agentes e cloud. Conecte-se: LinkedIn, GitHub, Instagram, WhatsApp e e-mail." />
-8
-<meta name="author" content="Carlos Alexandre Silva Reis" />
-9
- 
-10
-<title>Carlos Alexandre — Dev · IA · Cloud</title>
-11
- 
-12
-<!-- Open Graph / compartilhamento -->
-13
-<meta property="og:type" content="profile" />
-14
-<meta property="og:title" content="Carlos Alexandre — Dev · IA · Cloud" />
-15
-<meta property="og:description" content="Dev Full Stack em formação. IA, agentes e automação." />
-16
-<meta property="og:image" content="foto.png" />
-17
-<meta name="twitter:card" content="summary" />
-18
- 
-19
-<!-- Favicon inline (terminal verde) -->
-20
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0f'/><text y='68' x='18' font-size='56' fill='%2300ff88' font-family='monospace'>&gt;_</textreconnect" href="https://fonts.reconnect" href="https://fonts.gstaticm/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-21
- 
-22
-<style>
-23
-:root {
-24
---bg: #0a0a0f;
-25
---surface: #0f0f1a;
-26
---surface2: #141425;
-27
---border: #1e1e3a;
-28
---accent: #00ff88;
-29
---accent2: #0088ff;
-30
---accent3: #7c3aed;
-31
---text: #e2e8f0;
-32
---muted: #7c89a0;
-33
---glow: 0 0 20px rgba(0, 255, 136, 0.3);
-34
---glow2: 0 0 20px rgba(0, 136, 255, 0.3);
-35
---radius: 10px;
-36
---ease: cubic-bezier(0.22, 1, 0.36, 1);
-37
-}
-38
- 
-39
-* { margin: 0; padding: 0; box-sizing: border-box; }
-40
- 
-41
-html { -webkit-text-size-adjust: 100%; }
-42
- 
-43
-body {
-44
-background: var(--bg);
-45
-color: var(--text);
-46
-font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-47
-min-height: 100svh;
-48
-display: flex;
-49
-flex-direction: column;
-50
-align-items: center;
-51
-justify-content: center;
-52
-padding: clamp(24px, 6vw, 48px) 20px 48px;
-53
-position: relative;
-54
-overflow-x: hidden;
-55
--webkit-font-smoothing: antialiased;
-56
-}
-57
- 
-58
-/* Grid de fundo */
-59
-body::before {
-60
-content: '';
-61
-position: fixed;
-62
-inset: 0;
-63
-background-image:
-64
-linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-65
-linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
-66
-background-size: 40px 40px;
-67
--webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 40%, transparent 85%);
-68
-mask-image: radial-gradient(ellipse at 50% 0%, #000 40%, transparent 85%);
-69
-pointer-events: none;
-70
-z-index: 0;
-71
-}
-72
- 
-73
-/* Halo superior */
-74
-body::after {
-75
-content: '';
-76
-position: fixed;
-77
-top: -20%;
-78
-left: 50%;
-79
-transform: translateX(-50%);
-80
-width: min(600px, 120vw);
-81
-aspect-ratio: 1;
-82
-background: radial-gradient(circle, rgba(0,136,255,0.10) 0%, transparent 70%);
-83
-pointer-events: none;
-84
-z-index: 0;
-85
-}
-86
- 
-87
-.scanline {
-88
-position: fixed;
-89
-top: 0; left: 0; right: 0;
-90
-height: 2px;
-91
-background: linear-gradient(90deg, transparent, rgba(0,255,136,0.35), transparent);
-92
-animation: scan 4s linear infinite;
-93
-pointer-events: none;
-94
-z-index: 999;
-95
-}
-96
-@keyframes scan { from { transform: translateY(-2px); } to { transform: translateY(100svh); } }
-97
- 
-98
-.container {
-99
-width: 100%;
-100
-max-width: 430px;
-101
-position: relative;
-102
-z-index: 1;
-103
-animation: fadeUp 0.6s var(--ease) both;
-104
-}
-105
-@keyframes fadeUp {
-106
-from { opacity: 0; transform: translateY(20px); }
-107
-to { opacity: 1; transform: none; }
-108
-}
-109
- 
-110
-/* ===== BARRA DE TERMINAL ===== */
-111
-.terminal-bar {
-112
-background: var(--surface2);
-113
-border: 1px solid var(--border);
-114
-border-radius: var(--radius) var(--radius) 0 0;
-115
-padding: 10px 16px;
-116
-display: flex;
-117
-align-items: center;
-118
-gap: 8px;
-119
-margin-bottom: -1px;
-120
-}
-121
-.dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-122
-.dot-r { background: #ff5f57; }
-123
-.dot-y { background: #ffbd2e; }
-124
-.dot-g { background: #28c840; }
-125
-.terminal-title {
-126
-font-size: 11px;
-127
-color: var(--muted);
-128
-margin-left: 8px;
-129
-letter-spacing: 0.05em;
-130
-white-space: nowrap;
-131
-overflow: hidden;
-132
-text-overflow: ellipsis;
-133
-}
-134
- 
-135
-.card {
-136
-background: var(--surface);
-137
-border: 1px solid var(--border);
-138
-border-radius: 0 0 16px 16px;
-139
-padding: 32px 22px 28px;
-140
-box-shadow: 0 24px 60px -20px rgba(0,0,0,0.8);
-141
-}
-142
- 
-143
-/* ===== PERFIL ===== */
-144
-.profile-section {
-145
-display: flex;
-146
-flex-direction: column;
-147
-align-items: center;
-148
-gap: 16px;
-149
-margin-bottom: 22px;
-150
-}
-151
-.avatar-wrapper { position: relative; width: 92px; height: 92px; }
-152
-.avatar-ring {
-153
-position: absolute;
-154
-inset: -3px;
-155
-border-radius: 50%;
-156
-background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent));
-157
-animation: spin 5s linear infinite;
-158
-}
-159
-@keyframes spin { to { transform: rotate(360deg); } }
-160
-.avatar-inner {
-161
-position: absolute;
-162
-inset: 2px;
-163
-border-radius: 50%;
-164
-background: var(--bg);
-165
-display: grid;
-166
-place-items: center;
-167
-overflow: hidden;
-168
-font-family: 'Space Mono', monospace;
-169
-font-size: 30px;
-170
-font-weight: 700;
-171
-color: var(--accent);
-172
-}
-173
-.avatar-inner img {
-174
-width: 100%;
-175
-height: 100%;
-176
-object-fit: cover;
-177
-border-radius: 50%;
-178
-display: block;
-179
-}
-180
-.status-badge {
-181
-position: absolute;
-182
-bottom: 2px; right: 2px;
-183
-width: 20px; height: 20px;
-184
-border-radius: 50%;
-185
-background: var(--accent);
-186
-border: 3px solid var(--bg);
-187
-box-shadow: var(--glow);
-188
-animation: pulse 2s ease-in-out infinite;
-189
-}
-190
-@keyframes pulse {
-191
-0%, 100% { transform: scale(1); opacity: 1; }
-192
-50% { transform: scale(0.82); opacity: 0.65; }
-193
-}
-194
- 
-195
-.profile-info { text-align: center; }
-196
-.name {
-197
-font-family: 'Space Mono', monospace;
-198
-font-size: clamp(19px, 5vw, 22px);
-199
-font-weight: 700;
-200
-color: #fff;
-201
-letter-spacing: -0.5px;
-202
-margin-bottom: 6px;
-203
-}
-204
-.typewriter {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carlos Alexandre</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #0f0f1a;
+      --surface2: #141425;
+      --border: #1e1e3a;
+      --accent: #00ff88;
+      --accent2: #0088ff;
+      --accent3: #7c3aed;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --glow: 0 0 20px rgba(0, 255, 136, 0.3);
+      --glow2: 0 0 20px rgba(0, 136, 255, 0.3);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,136,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .terminal-bar {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px 10px 0 0;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: -1px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; }
+    .dot-y { background: #ffbd2e; }
+    .dot-g { background: #28c840; }
+    .terminal-title {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: 8px;
+      letter-spacing: 0.05em;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0 0 16px 16px;
+      padding: 32px 24px 28px;
+      margin-bottom: 12px;
+    }
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .avatar-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent));
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .avatar-inner {
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .profile-info { text-align: center; }
+    .name {
+      font-family: 'Space Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--accent);
+      width: 0;
+      animation: typing 1.8s steps(16, end) 0.3s forwards, blink-caret 0.8s step-end infinite;
+      display: inline-block;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink-caret {
+      0%, 100% { border-color: var(--accent); }
+      50% { border-color: transparent; }
+    }
+    .handle {
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .handle::before { content: '> '; opacity: 0.5; }
+    .bio {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      padding: 0 4px;
+    }
+    .bio span { color: var(--accent2); }
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tag {
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .tag-green  { background: rgba(0,255,136,0.1); color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+    .tag-blue   { background: rgba(0,136,255,0.1); color: var(--accent2); border: 1px solid rgba(0,136,255,0.2); }
+    .tag-purple { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.2); }
+
+    .section-label {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::before { content: '//'; color: var(--accent3); }
+    .section-label::after  { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .links { display: flex; flex-direction: column; gap: 8px; }
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .link-btn::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      border-radius: 10px 0 0 10px;
+    }
+    .link-btn.instagram::before { background: linear-gradient(to bottom, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .link-btn.linkedin::before  { background: var(--accent2); box-shadow: var(--glow2); }
+    .link-btn.whatsapp::before  { background: #25d366; box-shadow: 0 0 10px rgba(37,211,102,0.4); }
+    .link-btn.email::before     { background: var(--accent); box-shadow: var(--glow); }
+    .link-btn:hover {
+      background: var(--border);
+      transform: translateX(4px);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .link-btn:hover .link-arrow { opacity: 1; transform: translateX(0); }
+    .link-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .link-btn.linkedin  .link-icon { background: rgba(0,136,255,0.15); border: 1px solid rgba(0,136,255,0.2); }
+    .link-btn.email     .link-icon { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.2); }
+    .link-text { flex: 1; }
+    .link-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .link-sub {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .link-arrow {
+      font-size: 12px;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all 0.2s;
+    }
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .footer span { color: var(--accent); }
+    .link-btn:nth-child(1) { animation: slideIn 0.4s 0.1s ease both; }
+    .link-btn:nth-child(2) { animation: slideIn 0.4s 0.2s ease both; }
+    .link-btn:nth-child(3) { animation: slideIn 0.4s 0.3s ease both; }
+    .link-btn:nth-child(4) { animation: slideIn 0.4s 0.4s ease both; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .scanline {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,255,136,0.4), transparent);
+      animation: scan 3s linear infinite;
+      pointer-events: none;
+      z-index: 999;
+    }
+    @keyframes scan {
+      from { top: -2px; }
+      to   { top: 100vh; }
+    }
+  </style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="container">
+
+  <div class="terminal-bar">
+    <div class="dot dot-r"></div>
+    <div class="dot dot-y"></div>
+    <div class="dot dot-g"></div>
+    <span class="terminal-title">carlos.alexandre ~ links.sh</span>
+  </div>
+
+  <div class="card">
+
+    <div class="profile-section">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring"></div>
+        <div class="avatar-inner">
+          <img src="foto.png" />
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <div class="name">
+          <span class="typewriter">Carlos Alexandre</span>
+        </div>
+        <div class="handle">carlos.sreis_</div>
+        <div class="bio">
+          <span>Cloud Engineer</span> in the making ☁️<br/>
+          Building the future, one commit at a time.
+        </div>
+        <div class="tags">
+          <span class="tag tag-green">Dev</span>
+          <span class="tag tag-blue">Tech</span>
+          <span class="tag tag-purple">Builder</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="section-label">conecte-se</div>
+
+    <div class="links">
+
+      <a class="link-btn linkedin" href="https://www.linkedin.com/in/carlos-alexandre-0392a0361" target="_blank">
+        <div class="link-icon">💼</div>
+        <div class="link-text">
+          <div class="link-title">LinkedIn</div>
+          <div class="link-sub">carlos-alexandre</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
